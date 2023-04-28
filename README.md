@@ -1,12 +1,13 @@
 # Web Scraping Price API
-## To create a RESTful API that scrapes the given website and returns the price, I recommend using Node.js with the Express framework and the cheerio library for web scraping.
+#### To create a RESTful API that scrapes the given website and returns the price, I recommend using Node.js with the Express framework and the cheerio library for web scraping.
 
  
 
-    Create a Node.js project: Initialize a new Node.js project by running npm init in your terminal. Install the required dependencies by running npm install express cheerio axios.
+* Create a Node.js project: Initialize a new Node.js project by running npm init in your terminal. Install the required dependencies by running npm install express cheerio axios.
 
-    Create the API using Express: Create a new file, app.js, and set up an Express server with a single route for the /price endpoint. Use the axios library to make HTTP requests and cheerio for web scraping. Here's a sample code snippet:
+* Create the API using Express: Create a new file, app.js, and set up an Express server with a single route for the /price endpoint. Use the axios library to make HTTP requests and cheerio for web scraping. Here's a sample code snippet:
 
+```
 const express = require('express');
 const axios = require('axios');
 const cheerio = require('cheerio');
@@ -28,5 +29,5 @@ app.get('/price', async (req, res) => {
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port \${PORT}`));
 
-
+```
 Handle errors: In the code snippet above, we use a try-catch block to handle errors during the HTTP request and web scraping. If an error occurs, the API will return a 500 status code with a descriptive error message.
