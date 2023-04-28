@@ -1,36 +1,32 @@
 # Web Scraping Price API
-## Description
-This project creates a RESTful API that scrapes a webpage and returns the price of a product. It is built using Node.js, Express, Axios, and Cheerio.
+## To create a RESTful API that scrapes the given website and returns the price, I recommend using Node.js with the Express framework and the cheerio library for web scraping.
 
-- Motivation: The API allows users to easily access the latest price of a product from a specific webpage.
-- Problem solved: Users can now access the latest price without manually visiting the webpage and searching for the price.
-- Learning: This project demonstrates the use of web scraping techniques, RESTful API creation, and deployment on Heroku.
+ 
 
-## Table of Contents
-- [Installation](#installation)
-- [Usage](#usage)
-- [Deployment](#deployment)
-- [Credits](#credits)
-- [License](#license)
+    Create a Node.js project: Initialize a new Node.js project by running npm init in your terminal. Install the required dependencies by running npm install express cheerio axios.
 
-## Installation
-To set up the project locally, follow these steps:
+    Create the API using Express: Create a new file, app.js, and set up an Express server with a single route for the /price endpoint. Use the axios library to make HTTP requests and cheerio for web scraping. Here's a sample code snippet:
 
-1. Clone the repository: `git clone https://github.com/your-username/your-repo-name.git`
-2. Change to the project directory: `cd your-repo-name`
-3. Install dependencies: `npm install`
+const express = require('express');
+const axios = require('axios');
+const cheerio = require('cheerio');
 
-## Usage
-To run the project locally:
+const app = express();
 
-1. Start the server: `node app.js`
-2. Access the API: `http://localhost:3000/price`
+app.get('/price', async (req, res) => {
+  try {
+    const response = await axios.get('https://www.metal.com/Lithium-ion-Battery/202303240001');
+    const $ = cheerio.load(response.data);
+    const price = $('.detail___2oeiJ .left___wCEQV .strong___1JlBD').text();
 
-## Deployment
-To deploy the API on Heroku:
+    res.json({ price });
+  } catch (error) {
+    res.status(500).json({ message: 'An error occurred while fetching the price.' });
+  }
+});
 
-1. Install the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli)
-2. Log in to your Heroku account: `heroku login`
-3. Create a new app: `heroku create your-app-name`
-4. Add a Procfile with the following content: `web: node app.js`
-5. Commit your changes to a Git repository and push the code to Heroku:
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Server running on port \${PORT}`));
+
+
+Handle errors: In the code snippet above, we use a try-catch block to handle errors during the HTTP request and web scraping. If an error occurs, the API will return a 500 status code with a descriptive error message.
